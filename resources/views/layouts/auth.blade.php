@@ -664,7 +664,7 @@
             <div class="auth-footer">
                 <small>
                     Ứng dụng quản lý quỹ gia đình<br>
-                    Made with <span class="love-icon">Wyatt</span>
+                    Made with <span class="love-icon">Wyatt</span> version 1.0
                 </small>
             </div>
         </div>
