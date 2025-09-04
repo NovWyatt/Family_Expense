@@ -1,8 +1,8 @@
-@extends(‘layouts.app’)
+@extends('layouts.app')
 
-@section(‘title’, ‘Trang chủ’)
+@section('title', 'Trang chủ')
 
-@push(‘styles’)
+@push('styles')
 
 <style>
     .dashboard-container {
@@ -356,7 +356,7 @@
         .header-stats {
             grid-template-columns: 1fr;
         }
-        
+
         .dashboard-header {
             padding: 1rem;
         }
@@ -574,7 +574,7 @@
                         <span class="summary-value text-danger">{{ formatCurrency($monthlyStats['total_spent'] ?? 0) }}</span>
                     </div>
                     <div class="progress" style="height: 4px;">
-                        <div class="progress-bar bg-danger" 
+                        <div class="progress-bar bg-danger"
                              style="width: {{ ($monthlyStats['total_income'] ?? 1) > 0 ? min(100, (($monthlyStats['total_spent'] ?? 0) / ($monthlyStats['total_income'] ?? 1)) * 100) : 0 }}%">
                         </div>
                     </div>
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize dashboard
     initializeDashboard();
     loadRealtimeData();
-    
+
     // Refresh data every 5 minutes
     setInterval(loadRealtimeData, 5 * 60 * 1000);
 });
@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeDashboard() {
     // Add greeting based on time
     updateTimeBasedGreeting();
-    
+
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -660,7 +660,7 @@ function initializeDashboard() {
             const ripple = document.createElement('span');
             ripple.classList.add('ripple-effect');
             this.appendChild(ripple);
-            
+
             setTimeout(() => {
                 ripple.remove();
             }, 600);
@@ -676,12 +676,12 @@ function initializeDashboard() {
 function updateTimeBasedGreeting() {
     const hour = new Date().getHours();
     const welcomeSection = document.querySelector('.welcome-section h1');
-    
+
     if (!welcomeSection) return;
-    
+
     let greeting = 'Xin chào';
     let icon = 'bi-house-heart';
-    
+
     if (hour < 6) {
         greeting = 'Chúc ngủ ngon';
         icon = 'bi-moon-stars';
@@ -698,7 +698,7 @@ function updateTimeBasedGreeting() {
         greeting = 'Chúc ngủ ngon';
         icon = 'bi-moon';
     }
-    
+
     welcomeSection.innerHTML = `
         <i class="bi ${icon}"></i>
         ${greeting}, Gia đình!
@@ -713,7 +713,7 @@ async function loadRealtimeData() {
         // Load current balance
         const balanceResponse = await axios.get(window.App.routes.funds.balance);
         if (balanceResponse.data.success) {
-            document.getElementById('currentBalance').textContent = 
+            document.getElementById('currentBalance').textContent =
                 formatCurrency(balanceResponse.data.balance);
         }
 
@@ -721,12 +721,12 @@ async function loadRealtimeData() {
         const statsResponse = await axios.get(window.App.routes.funds.balance + '?type=stats');
         if (statsResponse.data.success) {
             const stats = statsResponse.data;
-            
-            document.getElementById('monthlyIncome').textContent = 
+
+            document.getElementById('monthlyIncome').textContent =
                 formatCurrency(stats.monthly_income || 0);
-            document.getElementById('monthlySpent').textContent = 
+            document.getElementById('monthlySpent').textContent =
                 formatCurrency(stats.monthly_spent || 0);
-            document.getElementById('shoppingTrips').textContent = 
+            document.getElementById('shoppingTrips').textContent =
                 stats.shopping_trips || 0;
         }
 
